@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Pricing Plans</title>
+    <!-- Cashfree SDK Script - Ithu thaan prachanai-ah fix pannum -->
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #6366f1; --dark: #111; --light: #f9fafb; --accent: #eaff96; }
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7fa; margin: 0; padding: 40px 20px; color: var(--dark); }
+        .container { display: flex; justify-content: center; align-items: flex-start; gap: 25px; flex-wrap: wrap; max-width: 1100px; margin: auto; }
+        .card { background: white; border-radius: 24px; padding: 40px 30px; width: 310px; position: relative; border: 2px solid transparent; box-shadow: 0 10px 40px rgba(0,0,0,0.04); transition: 0.3s; display: flex; flex-direction: column; box-sizing: border-box; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+        .popular { border-color: var(--primary); }
+        .popular-badge { background: var(--primary); color: white; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 6px 20px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .discount-badge { background: var(--accent); color: black; position: absolute; top: 25px; right: 25px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+        h2 { margin: 0; font-size: 28px; font-weight: 700; color: #111; }
+        p.desc { color: #6b7280; font-size: 14px; margin: 10px 0 25px 0; min-height: 40px; line-height: 1.5; }
+        .old-price { text-decoration: line-through; color: #9ca3af; font-size: 16px; margin-bottom: 4px; display: block; }
+        .price { font-size: 44px; font-weight: 800; color: #111; margin-bottom: 30px; }
+        .price span { font-size: 16px; color: #6b7280; font-weight: 400; }
+        .btn { display: block; width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #000; background: white; font-weight: 700; cursor: pointer; font-size: 16px; transition: 0.2s; margin-bottom: 35px; color: #000; }
+        .btn-dark { background: #000; color: #fff; }
+        .btn:hover { background: #f3f4f6; }
+        .btn-dark:hover { background: #222; }
+        .features { list-style: none; padding: 0; margin: 0; text-align: left; }
+        .features li { margin-bottom: 16px; font-size: 14px; color: #4b5563; display: flex; align-items: center; }
+        .features li::before { content: '✓'; color: #10b981; font-weight: 900; margin-right: 12px; font-size: 16px; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(5px); }
+        .modal-content { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.2); box-sizing: border-box; }
+        .modal-content input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #e5e7eb; border-radius: 12px; font-size: 15px; box-sizing: border-box; background: #f9fafb; font-family: inherit; }
+        .cancel-btn { color: #ef4444; cursor: pointer; font-size: 14px; margin-top: 15px; display: inline-block; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Starter Plan -->
+    <div class="card">
+        <div class="discount-badge">80% OFF</div>
+        <h2>Starter</h2>
+        <p class="desc">A great solution for small sites</p>
+        <span class="old-price">₹999.00</span>
+        <div class="price">₹199.00<span>/mo</span></div>
+        <button class="btn" onclick="openModal('Starter', 199)">Choose plan</button>
+        <ul class="features">
+            <li>Create 1 chatbot</li>
+            <li>1,000 Chats / Month</li>
+            <li>Standard Chatbot response</li>
+            <li>Email support</li>
+        </ul>
+    </div>
+
+    <!-- Business Plan -->
+    <div class="card popular">
+        <div class="popular-badge">MOST POPULAR</div>
+        <div class="discount-badge">80% OFF</div>
+        <h2 style="color: var(--primary);">Business</h2>
+        <p class="desc">Best for growing businesses</p>
+        <span class="old-price">₹1,999.00</span>
+        <div class="price" style="color: var(--primary);">₹399.00<span>/mo</span></div>
+        <button class="btn btn-dark" onclick="openModal('Business', 399)">Choose plan</button>
+        <ul class="features">
+            <li>Create 1 chatbot</li>
+            <li>5,000 Chats / Month</li>
+            <li>AI Trained Chatbot</li>
+            <li>Lead Generation Forms</li>
+            <li>Priority support</li>
+        </ul>
+    </div>
+
+    <!-- Enterprise Plan -->
+    <div class="card">
+        <div class="discount-badge">75% OFF</div>
+        <h2>Enterprise</h2>
+        <p class="desc">Advanced tools for big agencies</p>
+        <span class="old-price">₹3,499.00</span>
+        <div class="price">₹799.00<span>/mo</span></div>
+        <button class="btn" onclick="openModal('Enterprise', 799)">Choose plan</button>
+        <ul class="features">
+            <li>Unlimited Chats</li>
+            <li>AI Agent Chatbot</li>
+            <li>24/7 Priority Support</li>
+            <li>No Branding</li>
+        </ul>
+    </div>
+</div>
+
+<div id="modal">
+    <div class="modal-content">
+        <h3 id="selected-plan-title">Buy Plan</h3>
+        <input type="text" id="cust-name" placeholder="Full Name">
+        <input type="email" id="cust-email" placeholder="Email Address">
+        <input type="text" id="cust-phone" placeholder="Phone Number (10 digits)">
+        <button class="btn btn-dark" id="pay-btn" onclick="processOrder()" style="margin-bottom:0;">Pay & Confirm</button>
+        <span class="cancel-btn" onclick="closeModal()">Cancel</span>
+    </div>
+</div>
+
+<script>
+    // Cashfree Sandbox Initialize
+    const cashfree = Cashfree({ mode: "sandbox" });
+
+    let selectedPlanName = "";
+    let selectedPlanAmount = 0;
+
+    function openModal(plan, amount) {
+        selectedPlanName = plan;
+        selectedPlanAmount = amount;
+        document.getElementById('selected-plan-title').innerText = "Buy " + plan + " Plan";
+        document.getElementById('modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+
+    async function processOrder() {
+        const name = document.getElementById('cust-name').value;
+        const email = document.getElementById('cust-email').value;
+        const phone = document.getElementById('cust-phone').value;
+        const payBtn = document.getElementById('pay-btn');
+
+        if(!name || !email || !phone) { alert("Fill all details!"); return; }
+
+        payBtn.innerText = "Launching Gateway...";
+        payBtn.disabled = true;
+
+        try {
+            const response = await fetch('/create-order/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name, email: email, phone: phone,
+                    plan: selectedPlanName, amount: selectedPlanAmount
+                })
+            });
+
+            const data = await response.json();
+
+            // Ippo SDK use panni checkout panna porom
+            if (data.payment_session_id) {
+                let checkoutOptions = {
+                    paymentSessionId: data.payment_session_id,
+                    redirectTarget: "_self", // Intha page-laye open aagum
+                };
+                cashfree.checkout(checkoutOptions);
+            } else {
+                alert("Error: " + (data.message || "Session not found"));
+                payBtn.innerText = "Pay & Confirm";
+                payBtn.disabled = false;
+            }
+
+        } catch (err) {
+            alert("System Error! Check Terminal.");
+            payBtn.disabled = false;
+        }
+    }
+</script>
+
+</body>
+</html>
