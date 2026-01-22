@@ -4,162 +4,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Pricing Plans</title>
-    <!-- Cashfree SDK Script - Ithu thaan prachanai-ah fix pannum -->
+    <title>CriticTech | AI Automation Solutions</title>
+    
+    <!-- Fonts & SDK -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        :root { --primary: #6366f1; --dark: #111; --light: #f9fafb; --accent: #eaff96; }
-        body { font-family: 'Inter', sans-serif; background-color: #f4f7fa; margin: 0; padding: 40px 20px; color: var(--dark); }
-        .container { display: flex; justify-content: center; align-items: flex-start; gap: 25px; flex-wrap: wrap; max-width: 1100px; margin: auto; }
-        .card { background: white; border-radius: 24px; padding: 40px 30px; width: 310px; position: relative; border: 2px solid transparent; box-shadow: 0 10px 40px rgba(0,0,0,0.04); transition: 0.3s; display: flex; flex-direction: column; box-sizing: border-box; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
-        .popular { border-color: var(--primary); }
-        .popular-badge { background: var(--primary); color: white; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); padding: 6px 20px; border-radius: 20px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
-        .discount-badge { background: var(--accent); color: black; position: absolute; top: 25px; right: 25px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; }
-        h2 { margin: 0; font-size: 28px; font-weight: 700; color: #111; }
-        p.desc { color: #6b7280; font-size: 14px; margin: 10px 0 25px 0; min-height: 40px; line-height: 1.5; }
-        .old-price { text-decoration: line-through; color: #9ca3af; font-size: 16px; margin-bottom: 4px; display: block; }
-        .price { font-size: 44px; font-weight: 800; color: #111; margin-bottom: 30px; }
-        .price span { font-size: 16px; color: #6b7280; font-weight: 400; }
-        .btn { display: block; width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #000; background: white; font-weight: 700; cursor: pointer; font-size: 16px; transition: 0.2s; margin-bottom: 35px; color: #000; }
-        .btn-dark { background: #000; color: #fff; }
-        .btn:hover { background: #f3f4f6; }
-        .btn-dark:hover { background: #222; }
-        .features { list-style: none; padding: 0; margin: 0; text-align: left; }
-        .features li { margin-bottom: 16px; font-size: 14px; color: #4b5563; display: flex; align-items: center; }
-        .features li::before { content: '✓'; color: #10b981; font-weight: 900; margin-right: 12px; font-size: 16px; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999; backdrop-filter: blur(5px); }
-        .modal-content { background: white; padding: 40px; border-radius: 24px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.2); box-sizing: border-box; }
-        .modal-content input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #e5e7eb; border-radius: 12px; font-size: 15px; box-sizing: border-box; background: #f9fafb; font-family: inherit; }
-        .cancel-btn { color: #ef4444; cursor: pointer; font-size: 14px; margin-top: 15px; display: inline-block; font-weight: 600; }
+        :root {
+            --primary-blue: #16325B; /* Logo Navy Blue */
+            --primary-green: #78B333; /* Logo Green */
+            --light-green: #C6E0A1;
+            --dark-bg: #0A192F;
+            --grey: #64748b;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--primary-blue); background: #fdfdfd; scroll-behavior: smooth; overflow-x: hidden; }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { opacity: 0; transition: all 0.8s ease-out; transform: translateY(40px); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- NAVBAR --- */
+        nav { 
+            display: flex; justify-content: space-between; padding: 15px 8%; align-items: center; 
+            position: fixed; width: 100%; top: 0; background: var(--glass); 
+            backdrop-filter: blur(15px); z-index: 9999; border-bottom: 1px solid rgba(22, 50, 91, 0.1); 
+        }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary-blue); letter-spacing: -1px; }
+        .logo span { color: var(--primary-green); }
+        .nav-links { list-style: none; display: flex; align-items: center; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { text-decoration: none; color: var(--primary-blue); font-weight: 600; font-size: 14px; transition: 0.3s; }
+        .btn-main { background: var(--primary-green); color: white !important; padding: 12px 24px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 180px 8% 100px; background: radial-gradient(circle at top right, #f0f9eb, transparent); animation: fadeInUp 1s ease-out; }
+        .tag { background: var(--light-green); color: var(--primary-blue); padding: 8px 20px; border-radius: 100px; font-size: 11px; font-weight: 800; text-transform: uppercase; margin-bottom: 25px; display: inline-block; }
+        .hero h1 { font-size: clamp(38px, 7vw, 75px); font-weight: 800; line-height: 1.1; letter-spacing: -3px; margin-bottom: 30px; }
+        .hero h1 span { background: linear-gradient(90deg, var(--primary-blue), var(--primary-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--grey); font-size: clamp(16px, 2vw, 20px); max-width: 750px; margin: 0 auto 40px; line-height: 1.6; }
+
+        /* --- STEPS SECTION --- */
+        .work-section { background: var(--light); border-radius: 60px; margin: 0 4%; padding: 100px 8%; }
+        .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-top: 60px; }
+        .work-item { text-align: center; padding: 20px; transition: 0.3s; }
+        .work-item .step { width: 55px; height: 55px; background: var(--primary-blue); color: var(--primary-green); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; margin: 0 auto 20px; font-size: 22px; box-shadow: 0 10px 20px rgba(22, 50, 91, 0.2); }
+
+        /* --- PRICING SECTION --- */
+        .pricing { background: var(--primary-blue); color: white; border-radius: 60px 60px 0 0; padding: 100px 8%; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 60px; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        
+        .price-card { background: rgba(255, 255, 255, 0.05); border-radius: 40px; padding: 50px 35px; border: 1px solid rgba(255,255,255,0.1); transition: 0.4s; position: relative; }
+        .price-card.featured { border-color: var(--primary-green); background: rgba(120, 179, 51, 0.1); transform: scale(1.05); }
+        .popular-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary-green); color: var(--primary-blue); padding: 6px 20px; border-radius: 100px; font-size: 11px; font-weight: 800; }
+        
+        .price-card h3 { font-size: 26px; margin-bottom: 15px; }
+        .price-card .cost { font-size: 50px; font-weight: 800; margin-bottom: 30px; }
+        .price-card .cost span { font-size: 18px; opacity: 0.6; }
+        
+        .buy-btn { width: 100%; padding: 18px; border-radius: 14px; border: none; background: white; color: var(--primary-blue); font-weight: 800; font-size: 16px; cursor: pointer; transition: 0.3s; margin-bottom: 30px; }
+        .buy-btn:hover { background: var(--primary-green); transform: translateY(-2px); }
+        .featured .buy-btn { background: var(--primary-green); }
+
+        .f-list { list-style: none; text-align: left; }
+        .f-list li { font-size: 15px; margin-bottom: 18px; display: flex; align-items: center; color: #cbd5e1; }
+        .f-list li.check::before { content: '✔'; color: var(--primary-green); margin-right: 15px; font-weight: 900; }
+        .f-list li.wrong { color: #64748b; text-decoration: line-through; }
+        .f-list li.wrong::before { content: '✕'; color: #ff4d4d; margin-right: 15px; font-weight: 900; }
+
+        /* --- MODAL --- */
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.95); z-index: 99999; backdrop-filter: blur(12px); justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: white; padding: 50px 40px; border-radius: 40px; width: 100%; max-width: 420px; text-align: center; color: var(--primary-blue); }
+        .modal-content input { width: 100%; padding: 16px; margin-bottom: 15px; border: 1px solid #e2e8f0; border-radius: 14px; background: #f8fafc; font-size: 16px; }
+
+        footer { text-align: center; padding: 80px 5%; background: var(--primary-blue); color: rgba(255,255,255,0.6); border-top: 1px solid rgba(255,255,255,0.1); }
+        footer a { color: var(--primary-green); text-decoration: none; font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .pricing-grid { gap: 45px; }
+            .price-card.featured { transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Starter Plan -->
-    <div class="card">
-        <div class="discount-badge">80% OFF</div>
-        <h2>Starter</h2>
-        <p class="desc">A great solution for small sites</p>
-        <span class="old-price">₹999.00</span>
-        <div class="price">₹199.00<span>/mo</span></div>
-        <button class="btn" onclick="openModal('Starter', 199)">Choose plan</button>
-        <ul class="features">
-            <li>Create 1 chatbot</li>
-            <li>1,000 Chats / Month</li>
-            <li>Standard Chatbot response</li>
-            <li>Email support</li>
+    <nav>
+        <div class="logo">Critic <span>tech</span></div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="{% url 'logout' %}" style="color:var(--primary-green)">Logout</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="#pricing" class="btn-main">Get Started Now</a></li>
+            {% endif %}
         </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero">
+        <span class="tag">Trusted by 200+ Agencies</span>
+        <h1>If you can <span>Imagine</span> it,<br>Our AI can <span>Automate</span> it.</h1>
+        <p>The smartest AI agents for modern businesses. We build chatbots that think, learn, and convert like your best employee.</p>
+        <a href="#pricing" class="btn-main" style="padding: 18px 45px; font-size: 18px;">Get Started Now</a>
+    </header>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="work-section reveal">
+        <div class="section-header" style="text-align:center; margin-bottom:50px;">
+            <h2 style="font-size: 40px; font-weight: 800;">3 Steps to Launch</h2>
+        </div>
+        <div class="work-grid">
+            <div class="work-item">
+                <div class="step">1</div>
+                <h3>Pick a Plan</h3>
+                <p>Select the chatbot specialized for your business niche.</p>
+            </div>
+            <div class="work-item">
+                <div class="step">2</div>
+                <h3>AI Training</h3>
+                <p>Our AI will build you a custom chatbot and link to it based on your data.</p>
+            </div>
+            <div class="work-item">
+                <div class="step">3</div>
+                <h3>Go Live</h3>
+                <p>Paste one line of code and watch your business scale 24/7.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="pricing">
+        <div class="section-header" style="text-align:center; margin-bottom:60px;">
+            <h2 style="font-size: 42px; font-weight: 800; color:white;">Choose Your Growth Plan</h2>
+            <p style="opacity:0.6; margin-top:10px;">Simple plans for every business size.</p>
+        </div>
+        <div class="pricing-grid">
+            <!-- Starter -->
+            <div class="price-card reveal">
+                <h3>Starter</h3>
+                <div class="cost">₹199<span>/mo</span></div>
+                <button class="buy-btn" onclick="openModal('Starter', 199)">Choose Starter</button>
+                <ul class="f-list">
+                    <li class="check">500 Chats per month</li>
+                    <li class="check">Basic AI Reasoning</li>
+                    <li class="check">Standard Support</li>
+                    <li class="wrong">Custom Bot Training</li>
+                    <li class="wrong">Lead Dashboard</li>
+                    <li class="wrong">Priority Support</li>
+                </ul>
+            </div>
+            <!-- Business -->
+            <div class="price-card featured reveal">
+                <div class="popular-badge">Best Value</div>
+                <h3 style="color:var(--primary-green)">Business</h3>
+                <div class="cost" style="color:var(--primary-green)">₹399<span>/mo</span></div>
+                <button class="buy-btn" onclick="openModal('Business', 399)">Choose Business</button>
+                <ul class="f-list">
+                    <li class="check">2,000 Chats per month</li>
+                    <li class="check">Advanced AI Reasoning</li>
+                    <li class="check">Email Support</li>
+                    <li class="check">Custom Bot Training</li>
+                    <li class="wrong">Lead Dashboard</li>
+                    <li class="wrong">Priority Support</li>
+                </ul>
+            </div>
+            <!-- Enterprise -->
+            <div class="price-card reveal">
+                <h3>Enterprise</h3>
+                <div class="cost">₹799<span>/mo</span></div>
+                <button class="buy-btn" onclick="openModal('Enterprise', 799)">Choose Enterprise</button>
+                <ul class="f-list">
+                    <li class="check">Unlimited Chats</li>
+                    <li class="check">Highest AI Priority</li>
+                    <li class="check">Custom Bot Training</li>
+                    <li class="check">Lead Dashboard</li>
+                    <li class="check">Advanced Reporting</li>
+                    <li class="check">Dedicated Manager</li>
+                    <li class="check">24/7 Priority Support</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>A product by <a href="https://critictech.com" target="_blank">CriticTech Solutions</a></p>
+        <p style="margin-top:15px; font-size:12px; opacity:0.5;">&copy; 2026 All Rights Reserved.</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal">
+        <div class="modal-content">
+            <h2 id="plan-display" style="margin-bottom:30px; font-weight:800;">Activate Plan</h2>
+            <input type="text" id="cust-name" placeholder="Full Name">
+            <input type="email" id="cust-email" placeholder="Email Address">
+            <input type="text" id="cust-phone" placeholder="Phone Number">
+            <button class="btn-main" id="pay-btn" style="width:100%; padding:18px;" onclick="startPayment()">Pay & Activate Now</button>
+            <p onclick="closeModal()" style="color:var(--grey); cursor:pointer; font-size:14px; margin-top:25px; font-weight:600;">Maybe Later</p>
+        </div>
     </div>
 
-    <!-- Business Plan -->
-    <div class="card popular">
-        <div class="popular-badge">MOST POPULAR</div>
-        <div class="discount-badge">80% OFF</div>
-        <h2 style="color: var(--primary);">Business</h2>
-        <p class="desc">Best for growing businesses</p>
-        <span class="old-price">₹1,999.00</span>
-        <div class="price" style="color: var(--primary);">₹399.00<span>/mo</span></div>
-        <button class="btn btn-dark" onclick="openModal('Business', 399)">Choose plan</button>
-        <ul class="features">
-            <li>Create 1 chatbot</li>
-            <li>5,000 Chats / Month</li>
-            <li>AI Trained Chatbot</li>
-            <li>Lead Generation Forms</li>
-            <li>Priority support</li>
-        </ul>
-    </div>
-
-    <!-- Enterprise Plan -->
-    <div class="card">
-        <div class="discount-badge">75% OFF</div>
-        <h2>Enterprise</h2>
-        <p class="desc">Advanced tools for big agencies</p>
-        <span class="old-price">₹3,499.00</span>
-        <div class="price">₹799.00<span>/mo</span></div>
-        <button class="btn" onclick="openModal('Enterprise', 799)">Choose plan</button>
-        <ul class="features">
-            <li>Unlimited Chats</li>
-            <li>AI Agent Chatbot</li>
-            <li>24/7 Priority Support</li>
-            <li>No Branding</li>
-        </ul>
-    </div>
-</div>
-
-<div id="modal">
-    <div class="modal-content">
-        <h3 id="selected-plan-title">Buy Plan</h3>
-        <input type="text" id="cust-name" placeholder="Full Name">
-        <input type="email" id="cust-email" placeholder="Email Address">
-        <input type="text" id="cust-phone" placeholder="Phone Number (10 digits)">
-        <button class="btn btn-dark" id="pay-btn" onclick="processOrder()" style="margin-bottom:0;">Pay & Confirm</button>
-        <span class="cancel-btn" onclick="closeModal()">Cancel</span>
-    </div>
-</div>
-
-<script>
-    // Cashfree Sandbox Initialize
-    const cashfree = Cashfree({ mode: "sandbox" });
-
-    let selectedPlanName = "";
-    let selectedPlanAmount = 0;
-
-    function openModal(plan, amount) {
-        selectedPlanName = plan;
-        selectedPlanAmount = amount;
-        document.getElementById('selected-plan-title').innerText = "Buy " + plan + " Plan";
-        document.getElementById('modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-
-    async function processOrder() {
-        const name = document.getElementById('cust-name').value;
-        const email = document.getElementById('cust-email').value;
-        const phone = document.getElementById('cust-phone').value;
-        const payBtn = document.getElementById('pay-btn');
-
-        if(!name || !email || !phone) { alert("Fill all details!"); return; }
-
-        payBtn.innerText = "Launching Gateway...";
-        payBtn.disabled = true;
-
-        try {
-            const response = await fetch('/create-order/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name, email: email, phone: phone,
-                    plan: selectedPlanName, amount: selectedPlanAmount
-                })
+    <script>
+        // Scroll Reveal Animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-            const data = await response.json();
+        // Payment Logic
+        const cashfree = Cashfree({ mode: "sandbox" });
+        let selN = ""; let selA = 0;
 
-            // Ippo SDK use panni checkout panna porom
-            if (data.payment_session_id) {
-                let checkoutOptions = {
-                    paymentSessionId: data.payment_session_id,
-                    redirectTarget: "_self", // Intha page-laye open aagum
-                };
-                cashfree.checkout(checkoutOptions);
-            } else {
-                alert("Error: " + (data.message || "Session not found"));
-                payBtn.innerText = "Pay & Confirm";
-                payBtn.disabled = false;
-            }
-
-        } catch (err) {
-            alert("System Error! Check Terminal.");
-            payBtn.disabled = false;
+        function openModal(name, amt) {
+            selN = name; selA = amt;
+            document.getElementById('plan-display').innerText = "Deploy " + name + " Plan";
+            document.getElementById('modal').style.display = 'flex';
         }
-    }
-</script>
 
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        async function startPayment() {
+            const name = document.getElementById('cust-name').value;
+            const email = document.getElementById('cust-email').value;
+            const phone = document.getElementById('cust-phone').value;
+            const btn = document.getElementById('pay-btn');
+
+            if(!name || !email || !phone) return alert("Please fill all details!");
+            btn.innerText = "Launching Gateway..."; btn.disabled = true;
+
+            try {
+                const res = await fetch('/create-order/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}' // Django CSRF Compatibility
+                    },
+                    body: JSON.stringify({ name, email, phone, plan: selN, amount: selA })
+                });
+                const data = await res.json();
+                if(data.payment_session_id) {
+                    cashfree.checkout({ paymentSessionId: data.payment_session_id, redirectTarget: "_self" });
+                } else {
+                    alert("Gateway Error: " + (data.message || "Session not found"));
+                    btn.innerText = "Pay & Activate Now"; btn.disabled = false;
+                }
+            } catch(e) { alert("Server Error!"); btn.disabled = false; }
+        }
+    </script>
 </body>
 </html>
