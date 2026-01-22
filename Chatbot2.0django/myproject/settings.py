@@ -4,12 +4,17 @@ from pathlib import Path
 # 1. Base Directory Setup
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# 2. Security (Development-ku mattum)
+# 2. Security (Production settings)
 SECRET_KEY = 'django-insecure-your-secret-key-here'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
 
-# 3. Installed Apps (Unga chatbot app-ah inga register pannuvom)
+
+# Local-la check pannum pothu eppovum DEBUG = True veinga
+DEBUG = True 
+
+# 127.0.0.1 matrum localhost-ah intha list-la add pannunga
+ALLOWED_HOSTS = ['saroai.site', 'www.saroai.site', '159.89.160.226', '127.0.0.1', 'localhost']
+
+# 3. Installed Apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,11 +38,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'myproject.urls'
 
-# 5. Templates (HTML folder address)
+# 5. Templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # templates folder-ah kaaturoam
+        'DIRS': [BASE_DIR / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,7 +57,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# 6. Database (SQLite - Local storage)
+# 6. Database (SQLite)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -74,17 +79,23 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# 9. Static Files (CSS, JS, Images)
+# 9. Static Files (Production Configuration)
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Ithu thaan romba mukkiyam - Error-ah fix pannum
+STATIC_ROOT = BASE_DIR / 'static_root'
+
+# Ithu unga local static files folder
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 10. EMAIL CONFIGURATION (Neenga ketta Mail notification-ku)
-# MUKKIYAM: Unga Gmail-la 'App Password' create panni anga kudukanum.
+# 10. EMAIL CONFIGURATION 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your-email@gmail.com'  # <-- Unga Gmail ID-ah inga kudunga
-EMAIL_HOST_PASSWORD = 'xxxx xxxx xxxx xxxx' # <-- Unga Gmail 16-digit 'App Password' inga kudunga
+EMAIL_HOST_USER = 'your-email@gmail.com'  # <-- Unga Gmail ID kudunga
+EMAIL_HOST_PASSWORD = 'xxxx xxxx xxxx xxxx' # <-- Unga Gmail App Password kudunga
